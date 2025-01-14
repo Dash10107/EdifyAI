@@ -1,4 +1,5 @@
 "use client";
+import 'regenerator-runtime/runtime'
 import { useState } from "react";
 import { UserInputContext } from "../_context/UserInputContext";
 import Header from "../course-dashboard/_components/Header";

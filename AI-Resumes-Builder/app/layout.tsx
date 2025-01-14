@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import type { Metadata } from "next";
 import { Urbanist, Open_Sans } from "next/font/google";
 import "./globals.css";

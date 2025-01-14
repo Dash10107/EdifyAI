@@ -1,11 +1,15 @@
-import { ChapterContentType, ChapterType } from "@/types/resume.type";
-import React from "react";
+import { ChapterContentType, ChapterType, CourseType } from "@/types/resume.type";
+import React, { useEffect } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
 import ReactMarkdown from "react-markdown";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 type ChapterContentProps = {
+  course:CourseType;
   chapter: ChapterType | null;
   content: ChapterContentType | null;
+  handleNext: () => void;
 };
 
 const videoOpts = {
@@ -17,7 +21,7 @@ const videoOpts = {
   },
 };
 
-const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
+const ChapterContent = ({course, chapter, content,handleNext }: ChapterContentProps) => {
 //   console.log(content);
 
 
@@ -25,6 +29,8 @@ const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
   };
+
+
   return (
     <div className="p-10">
       <h2 className="font-medium text-2xl">{chapter?.chapter_name}</h2>
@@ -40,8 +46,7 @@ const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
       </div>
 
       <div>
-        {content &&
-          content.content.map((item, index) => (
+        {content?.content.map((item, index) => (
             <div key={index} className="my-5 bg-sky-50 rounded-lg p-5">
               <h2 className="font-medium text-lg">{item.title}</h2>
               <ReactMarkdown className={"mt-3"}>
@@ -68,6 +73,15 @@ const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
               )}
             </div>
           ))}
+      </div>
+     {/* Take a Quiz button */}
+     <div className="mt-6 flex justify-center">
+        <Button
+          onClick={handleNext}
+          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
+        >
+          Take a Quiz
+        </Button>
       </div>
     </div>
   );

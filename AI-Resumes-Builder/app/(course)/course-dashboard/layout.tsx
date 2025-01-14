@@ -1,5 +1,5 @@
 "use client";
-
+import 'regenerator-runtime/runtime'
 import { useState } from "react";
 import { UserCourseListContext } from "../_context/UserCourseList.context";
 import Header from "./_components/Header";

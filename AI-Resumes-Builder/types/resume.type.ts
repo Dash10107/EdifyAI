@@ -96,6 +96,7 @@ export type CourseType = {
   createdBy: string | null;
   courseBanner: string | null;
   isPublished: boolean;
+  progress: number;
 };
 
 export type CodeExampleType = {
@@ -114,4 +115,11 @@ export type ChapterContentType = {
   courseId: string;
   content: ChapterSectionType[];
   videoId: string;
+  quiz: {  // Define quiz structure
+    question: string;
+    options: string[];
+    answer: string;
+  }[];
+
 };
+

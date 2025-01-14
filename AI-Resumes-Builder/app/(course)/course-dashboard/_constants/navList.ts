@@ -31,4 +31,16 @@ export const navList: NavListType[] = [
     icon: LuShieldCheck,
     route: "/course-dashboard/upgrade",
   },
+  {
+    id: 4,
+    name: "Events",
+    icon: LuLayoutDashboard,
+    route: "/events",
+  },
+  {
+    id: 5,
+    name: "Pathway",
+    icon: LuAtom,
+    route: "/path",
+  }
 ];

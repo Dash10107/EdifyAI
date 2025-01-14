@@ -22,6 +22,14 @@ const generationConfig = {
   responseMimeType: "application/json",
 };
 
+export  const chatSession = model.startChat({
+  generationConfig,
+ 
+// safetySettings: Adjust safety settings
+// See https://ai.google.dev/gemini-api/docs/safety-settings
+ 
+});
+
 export const generateCourseLayout = model.startChat({
   generationConfig,
   history: [
@@ -51,7 +59,7 @@ export const generateCourseChapters = model.startChat({
       role: "user",
       parts: [
         {
-          text: "Explain the concepts in detail on Topic: Python Basics, Chapter: Introduction to python, in JSON Format with list of array with fields as Title, explination of given chapter in detail, code examples (code field <precode> format) if applicable.",
+          text: "Explain the concepts in detail on Topic: Python Basics, Chapter: Introduction to python, in JSON Format with list of array with fields as Title, explanation of given chapter in detail, code examples (code field <precode> format) if applicable. Additionally, generate 3-4 questions to test the user's understanding of the chapter.",
         },
       ],
     },
@@ -59,7 +67,98 @@ export const generateCourseChapters = model.startChat({
       role: "model",
       parts: [
         {
-          text: '```json\n[\n  {\n    "title": "What is Python?",\n    "explanation": "Python is a high-level, interpreted, general-purpose programming language. It\'s known for its readability, versatility, and extensive libraries, making it suitable for a wide range of applications, from web development and data science to scripting and automation.",\n    "code_examples": []\n  },\n  {\n    "title": "Why Python?",\n    "explanation": "Python\'s popularity stems from several key advantages:\\n\\n* **Readability:** Python\'s syntax is designed to be clear and concise, resembling natural language, making it easier to learn and understand.\\n* **Versatility:** Python is widely used in various domains, including web development, data analysis, machine learning, scientific computing, and more.\\n* **Extensive Libraries:** Python offers a vast collection of pre-built libraries that provide ready-to-use tools for specific tasks, saving developers time and effort.\\n* **Large Community:** Python boasts a vibrant and active community, providing ample resources, support, and contributions.\\n* **Beginner-Friendly:** Python\'s simplicity and focus on readability make it an excellent choice for beginners entering the world of programming.",\n    "code_examples": []\n  },\n  {\n    "title": "Running Python Code",\n    "explanation": "To execute Python code, you can use the following methods:\\n\\n* **Interactive Interpreter:** This mode allows you to type and run Python commands directly in the console. You can access it by typing `python` in your terminal or command prompt.\\n* **Script Files:** Python code can be saved in files with the `.py` extension. To run a script file, you can use the `python` command followed by the file name in your terminal or command prompt.\\n* **Integrated Development Environments (IDEs):** IDEs offer a comprehensive environment for coding, debugging, and running Python code. Popular IDEs include PyCharm, VS Code, and Spyder.",\n    "code_examples": [\n      {\n        "code": "<precode>print(\'Hello, world!\')</precode>"\n      }\n    ]\n  },\n  {\n    "title": "Basic Data Types",\n    "explanation": "Python supports various data types to represent different kinds of data:\\n\\n* **Integers (int):** Whole numbers without decimal points. Example: 10, -5, 0\\n* **Floating-point Numbers (float):** Numbers with decimal points. Example: 3.14, -2.5, 1.0\\n* **Strings (str):** Sequences of characters enclosed in single (\' \') or double (\\" \\") quotes. Example: \'Hello\', \\"Python\\"\\n* **Booleans (bool):** Logical values representing True or False. Example: True, False",\n    "code_examples": [\n      {\n        "code": "<precode>number = 10  # Integer\\npi = 3.14  # Float\\nmessage = \'Hello, Python!\'  # String\\nis_active = True  # Boolean</precode>"\n      }\n    ]\n  },\n  {\n    "title": "Variables",\n    "explanation": "Variables act as containers that store data. In Python, you can assign values to variables using the assignment operator (=).",\n    "code_examples": [\n      {\n        "code": "<precode>name = \'Alice\'\\nage = 25\\nheight = 1.75</precode>"\n      }\n    ]\n  },\n  {\n    "title": "Operators",\n    "explanation": "Operators are symbols that perform specific operations on values or variables.\\n\\n* **Arithmetic Operators:**\\n    * `+` (Addition)\\n    * `-` (Subtraction)\\n    * `*` (Multiplication)\\n    * `/` (Division)\\n    * `%` (Modulo - Remainder after division)\\n    * `**` (Exponentiation)\\n    * `//` (Floor division - Rounds down to the nearest integer)\\n\\n* **Comparison Operators:**\\n    * `==` (Equal to)\\n    * `!=` (Not equal to)\\n    * `>` (Greater than)\\n    * `<` (Less than)\\n    * `>=` (Greater than or equal to)\\n    * `<=` (Less than or equal to)\\n\\n* **Logical Operators:**\\n    * `and` (Logical AND)\\n    * `or` (Logical OR)\\n    * `not` (Logical NOT)",\n    "code_examples": [\n      {\n        "code": "<precode>result = 10 + 5  # Addition\\nremainder = 10 % 3  # Modulo\\npower = 2 ** 3  # Exponentiation\\nis_equal = 5 == 5  # Equal to\\nis_greater = 10 > 5  # Greater than\\nis_true = True and True  # Logical AND</precode>"\n      }\n    ]\n  },\n  {\n    "title": "Input and Output",\n    "explanation": "Python provides functions for interacting with the user:\\n\\n* **Input:** The `input()` function prompts the user for input and returns the entered value as a string.\\n* **Output:** The `print()` function displays text or values to the console.",\n    "code_examples": [\n      {\n        "code": "<precode>name = input(\'Enter your name: \')  # Input\\nprint(\'Hello,\', name + \'!\')  # Output</precode>"\n      }\n    ]\n  }\n]\n```',
+          text: '```json\n[\n  {\n    "title": "What is Python?",\n    "explanation": "Python is a high-level, interpreted, general-purpose programming language. It\'s known for its readability, versatility, and extensive libraries, making it suitable for a wide range of applications, from web development and data science to scripting and automation.",\n    "code_examples": [],\n    "quiz": [\n      { "question": "What does Python support?", "options": ["Integers", "Strings", "Loops", "All of the above"], "answer": "All of the above" },\n      { "question": "What is a variable in Python?", "options": ["A placeholder for data", "A fixed value", "A constant", "None of the above"], "answer": "A placeholder for data" }\n    ]\n  },\n  {\n    "title": "Why Python?",\n    "explanation": "Python\'s popularity stems from several key advantages:\\n\\n* **Readability:** Python\'s syntax is designed to be clear and concise, resembling natural language, making it easier to learn and understand.\\n* **Versatility:** Python is widely used in various domains, including web development, data analysis, machine learning, scientific computing, and more.\\n* **Extensive Libraries:** Python offers a vast collection of pre-built libraries that provide ready-to-use tools for specific tasks, saving developers time and effort.\\n* **Large Community:** Python boasts a vibrant and active community, providing ample resources, support, and contributions.\\n* **Beginner-Friendly:** Python\'s simplicity and focus on readability make it an excellent choice for beginners entering the world of programming.",\n    "code_examples": [],\n    "quiz": [\n      { "question": "Why is Python considered beginner-friendly?", "options": ["Its readability", "Its speed", "Its complexity", "Its extensive libraries"], "answer": "Its readability" }\n    ]\n  }\n]\n```',
+        },
+      ],
+    },
+  ],
+});
+
+
+
+
+export const generatePathway = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        {
+          text: "Generate a detailed learning pathway for a given career. The response should be in JSON format and include the following fields: title, description, estimatedTime, difficulty, prerequisites (array), and steps (array of objects with title, description, estimatedTime, and resources fields). Each step's resources should be an array of objects with title and url fields.",
+        },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {
+          text: "Understood. I'll generate a detailed learning pathway in the specified JSON format when provided with a career and description. Here's an example of the expected output format:",
+        },
+        {
+          text: `
+\`\`\`json
+{
+  "title": "Full Stack Web Developer Learning Path",
+  "description": "This comprehensive learning path will guide you through becoming a proficient full stack web developer, covering both front-end and back-end technologies, as well as essential tools and practices in modern web development.",
+  "estimatedTime": "6-8 months",
+  "difficulty": "Intermediate",
+  "prerequisites": [
+    "Basic understanding of HTML, CSS, and JavaScript",
+    "Familiarity with command-line interfaces",
+    "Problem-solving skills and logical thinking"
+  ],
+  "steps": [
+    {
+      "title": "Advanced JavaScript and ES6+",
+      "description": "Deepen your understanding of JavaScript, including modern ES6+ features, asynchronous programming, and functional programming concepts.",
+      "estimatedTime": "3 weeks",
+      "resources": [
+        {
+          "title": "JavaScript.info",
+          "url": "https://javascript.info/"
+        },
+        {
+          "title": "Eloquent JavaScript",
+          "url": "https://eloquentjavascript.net/"
+        }
+      ]
+    },
+    {
+      "title": "React Fundamentals",
+      "description": "Learn the basics of React, including components, state management, and hooks.",
+      "estimatedTime": "4 weeks",
+      "resources": [
+        {
+          "title": "React Official Documentation",
+          "url": "https://reactjs.org/docs/getting-started.html"
+        },
+        {
+          "title": "React Tutorial by Tao of React",
+          "url": "https://www.taoofcode.net/react-tutorial/"
+        }
+      ]
+    },
+    {
+      "title": "Node.js and Express",
+      "description": "Explore server-side JavaScript with Node.js and build RESTful APIs using Express.",
+      "estimatedTime": "3 weeks",
+      "resources": [
+        {
+          "title": "Node.js Official Documentation",
+          "url": "https://nodejs.org/en/docs/"
+        },
+        {
+          "title": "Express.js Guide",
+          "url": "https://expressjs.com/en/guide/routing.html"
+        }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+This example demonstrates the structure and content expected for a learning pathway. When generating a pathway for a specific career, I'll follow this format, adjusting the content to match the given career and description.
+          `,
         },
       ],
     },

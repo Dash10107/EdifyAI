@@ -10,6 +10,8 @@ import ChapterContent from "./_components/ChapterContent";
 import Image from "next/image";
 import UserToolTip from "./_components/UserToolTip";
 import ScrollProgress from "@/components/ui/scroll-progress";
+import QuizModal from "./_components/QuizModal";
+import ChatbotModal from "./_components/Chatbot";
 
 type CourseStartProps = {
   params: { courseId: string };
@@ -22,7 +24,7 @@ const CourseStart = ({ params }: CourseStartProps) => {
   );
   const [chapterContent, setChapterContent] =
     useState<ChapterContentType | null>(null);
-
+    const [isQuizOpen, setIsQuizOpen] = useState(false);
   const getCourse = async () => {
     try {
       const result = await db
@@ -59,7 +61,18 @@ const CourseStart = ({ params }: CourseStartProps) => {
     setChapterContent(res[0] as ChapterContentType);
   };
 
+  
+
   //   console.log("chapterContent", chapterContent);
+  const handleNext = () => {
+    if (chapterContent?.quiz) {
+      setIsQuizOpen(true); // Open the quiz modal
+    } else {
+      // Handle next chapter logic here
+    }
+  };
+
+  
 
   return (
     <div>
@@ -69,7 +82,8 @@ const CourseStart = ({ params }: CourseStartProps) => {
         </h2>
         <div>
           {course?.courseOutput.chapters.map((chapter, index) => (
-            <div
+            // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+<div
               key={index}
               className={`cursor-pointer hover:bg-purple-100 ${
                 selectedChapter?.chapter_name === chapter.chapter_name &&
@@ -90,9 +104,20 @@ const CourseStart = ({ params }: CourseStartProps) => {
         {selectedChapter ? (
           <div>
             <ChapterContent
+              course={course}
               chapter={selectedChapter}
               content={chapterContent}
+              handleNext={handleNext}
             />
+          {isQuizOpen && chapterContent?.quiz && (
+        <QuizModal
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        questions={chapterContent.quiz}
+        courseId ={course.courseId}
+        totalChapters={course.courseOutput.chapters.length}
+        />
+      )}
             <ScrollProgress />
           </div>
         ) : (
@@ -117,6 +142,9 @@ const CourseStart = ({ params }: CourseStartProps) => {
             </p>
           </div>
         )}
+        <ChatbotModal 
+          course={course}
+        />
       </div>
     </div>
   );
