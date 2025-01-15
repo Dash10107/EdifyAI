@@ -1,0 +1,33 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Video Summarizer",
+    "version": "1.0",
+    "description": "Get AI-powered summaries of YouTube videos using Gemini",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting", 
+      "tabs"
+    ],
+    "host_permissions": [
+      "https://www.googleapis.com/*",
+      "https://*.googleapis.com/*"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    }
+  }
+
+  
+  
+  

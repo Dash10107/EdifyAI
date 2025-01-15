@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Summarizer</title>
+  <style>
+    body {
+      width: 400px;
+      min-height: 300px;
+      padding: 16px;
+      font-family: Arial, sans-serif;
+    }
+    #loading, #error, #result {
+      display: none;
+      margin-top: 10px;
+    }
+    #loading {
+      text-align: center;
+    }
+    #error {
+      color: red;
+    }
+    #result {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube Summarizer</h1>
+  <form id="summarize-form">
+    <input type="text" id="video-url" placeholder="Enter YouTube URL" required>
+    <button type="submit">Summarize</button>
+  </form>
+  <div id="loading">Generating summary...</div>
+  <div id="error"></div>
+  <div id="result">
+    <h2 id="video-title"></h2>
+    <img id="video-thumbnail" src="/placeholder.svg" alt="Video Thumbnail" style="max-width: 100%; height: auto;">
+    <h3>Summary:</h3>
+    <p id="summary"></p>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
+
