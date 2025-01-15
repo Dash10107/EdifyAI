@@ -21,15 +21,11 @@ const AddCourse = () => {
   return (
     <div className="flex justify-between items-center">
       <div>
-        <h2 className="text-3xl">
-          Hello, <span className="font-bold">{user?.given_name + " " + user?.family_name}</span>
-        </h2>
-        <p className="text-xs text-gray-500">
-          Create new course with AI, share with friends and Earn some penny
-        </p>
+      <h2 className="font-bold text-4xl">Customize Your Own Course</h2>
+      <p className=" mb-8 text-xl px-1">Explore courses build with AI </p>
       </div>
       <Link href={userCourseList.length >= 5 ? "/course-dashboard/upgrade" : "/create-course"}>
-        <Button className="gap-2">
+        <Button className="gap-2 text-lg font-semibold">
           <FaWandMagicSparkles />
           Create AI course
         </Button>

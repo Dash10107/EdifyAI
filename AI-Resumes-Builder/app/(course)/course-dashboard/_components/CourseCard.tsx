@@ -43,7 +43,7 @@ const CourseCard = ({
         <Image
           src={"/thumbnail.png"}
           alt={course?.courseName ?? "Ai Course Generator"}
-          width={300}
+          width={200}
           height={200}
           priority
           className="w-full h-[200px] object-cover rounded-lg hover:scale-105 transition-all cursor-pointer"
@@ -51,24 +51,24 @@ const CourseCard = ({
       </Link>
 
       <div className="p-2">
-        <h2 className="font-medium text-lg flex items-center justify-between">
+        <h2 className="font-medium text-xl flex items-center justify-between">
           {course.courseOutput.topic}
           {!displayUser && (
             <DropDownOptions handleDeleteCourse={() => handleOnDelete()}>
               <HiOutlineDotsVertical
-                size={20}
-                className="cursor-pointer p-1 bg-purple-50 text-primary text-sm rounded-sm"
+                size={28}
+                className="cursor-pointer p-1 bg-purple-50 text-black text-sm rounded-sm"
               />
             </DropDownOptions>
           )}
         </h2>
-        <p className="text-sm text-gray-400 my-1">{course.category}</p>
+        <p className="text-lg text-gray-400 my-1">{course.category}</p>
 
-        <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 p-1 bg-purple-50 text-primary text-sm rounded-sm">
+        <div className="flex items-center justify-between py-2">
+          <h2 className="flex items-center gap-2 p-2 px-4 font-medium bg-purple-50 text-black text-md rounded-md">
             <MdMenuBook /> {course?.courseOutput?.chapters?.length} Chapters
           </h2>
-          <h2 className="text-sm p-1 bg-purple-50 text-primary rounded-sm">
+          <h2 className="text-md p-2 px-4 bg-purple-50 text-black rounded-md font-medium">
             {course.level} Level
           </h2>
         </div>

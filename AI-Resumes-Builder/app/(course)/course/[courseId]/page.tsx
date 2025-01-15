@@ -1,14 +1,18 @@
 "use client";
 
-import ChapterList from "@/app/create-course/[courseId]/_components/ChapterList";
-import CourseBasicInfo from "@/app/create-course/[courseId]/_components/CourseBasicInfo";
-import CourseDetail from "@/app/create-course/[courseId]/_components/CourseDetail";
-import Header from "@/app/course-dashboard/_components/Header";
+// import ChapterList from "@/app/create-course/[courseId]/_components/ChapterList";
+// import CourseBasicInfo from "@/app/create-course/[courseId]/_components/CourseBasicInfo";
+// import CourseDetail from "@/app/create-course/[courseId]/_components/CourseDetail";
+// import Header from "@/app/course-dashboard/_components/Header";
 import { db } from "@/configs/db";
 import { CourseList } from "@/db/schema/chapter";
 import { CourseType } from "@/types/resume.type";
 import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
+import ChapterList from "../../create-course/[courseId]/_components/ChapterList";
+import CourseDetail from "../../create-course/[courseId]/_components/CourseDetail";
+import CourseBasicInfo from "../../create-course/[courseId]/_components/CourseBasicInfo";
+import Header from "../../course-dashboard/_components/Header";
 
 type CourseParams = {
   params: {

@@ -12,20 +12,22 @@ import UserToolTip from "./_components/UserToolTip";
 import ScrollProgress from "@/components/ui/scroll-progress";
 import QuizModal from "./_components/QuizModal";
 import ChatbotModal from "./_components/Chatbot";
-
+import { useRouter } from 'next/navigation';
 type CourseStartProps = {
   params: { courseId: string };
 };
 
 const CourseStart = ({ params }: CourseStartProps) => {
+ 
   const [course, setCourse] = useState<CourseType | null>(null);
   const [selectedChapter, setSelectedChapter] = useState<ChapterType | null>(
     null
   );
-  const [chapterContent, setChapterContent] =
-    useState<ChapterContentType | null>(null);
-    const [isQuizOpen, setIsQuizOpen] = useState(false);
-  const getCourse = async () => {
+
+  const [chapterContent, setChapterContent] =useState<ChapterContentType | null>(null);
+     const [isQuizOpen, setIsQuizOpen] = useState(false);
+    const router = useRouter();
+    const getCourse = async () => {
     try {
       const result = await db
         .select()
@@ -97,6 +99,18 @@ const CourseStart = ({ params }: CourseStartProps) => {
               <ChapterListCard chapter={chapter} index={index} />
             </div>
           ))}
+            <div
+  className="cursor-pointer hover:bg-purple-100"
+  onClick={() => router.push(`/forum/${course.id}`)}  
+>
+  <ChapterListCard
+    chapter={{ chapter_name: "Go to Forum" ,
+    description: "Discuss with other learners",
+    duration: "0"
+    }}
+    index={course.courseOutput.chapters.length}
+  />
+</div>
         </div>
       </div>
 

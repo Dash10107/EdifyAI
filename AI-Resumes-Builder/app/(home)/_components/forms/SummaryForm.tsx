@@ -153,17 +153,17 @@ const SummaryForm: React.FC<SummaryFormProps> = ({ handleNext }) => {
   return (
     <div>
       <div className="w-full">
-        <h2 className="font-bold text-lg">Summary</h2>
-        <p className="text-sm">Add summary for your resume</p>
+        <h2 className="font-bold text-xl">Summary</h2>
+        <p className="text-lg text-gray-600">Add summary for your resume</p>
       </div>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="py-4">
           <div className="flex items-end justify-between">
-            <Label>Add Summary</Label>
+            <Label className="text-md text-gray-600 px-2">Add Summary</Label>
             <Button
               variant="outline"
               type="button"
-              className="gap-1"
+              className="gap-1 text-md font-semibold"
               disabled={loading || isPending}
               onClick={generateSummaryFromAI}
             >
@@ -172,7 +172,7 @@ const SummaryForm: React.FC<SummaryFormProps> = ({ handleNext }) => {
             </Button>
           </div>
           <Textarea
-            className="mt-5 min-h-36"
+            className="mt-3 min-h-36 text-md"
             required
             value={resumeInfo?.summary || ""}
             onChange={handleChange}
@@ -202,7 +202,7 @@ const SummaryForm: React.FC<SummaryFormProps> = ({ handleNext }) => {
           )}
 
           <Button
-            className="mt-4"
+            className="mt-4 text-md font-semibold py-2"
             type="submit"
             disabled={isPending || loading || resumeInfo?.status === "archived"}
           >

@@ -6,12 +6,12 @@ import TrashListBox from "../_components/TrashListBox";
 const Page = () => {
   return (
     <div className="w-full">
-      <div className="w-full mx-auto max-w-7xl py-5 px-5">
+      <div className="w-full mx-auto max-w-[90%] py-5 px-12">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Resume Builder</h1>
-            <p className="text-base dark:text-inherit">
-              Create your own custom resume with AI & Subscribe to the channel
+            <h1 className="text-4xl font-bold">Resume Builder</h1>
+            <p className="text-xl dark:text-inherit">
+              Create your own custom resume with AI
             </p>
           </div>
           <div className="shrink-0 flex items-center gap-3">

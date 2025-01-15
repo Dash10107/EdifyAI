@@ -37,9 +37,8 @@ const UserCourseList = () => {
 
   if (courses?.length === 0) return <div className="flex justify-center items-center mt-44">No courses found</div>;
   return (
-    <div className="mt-10">
-      <h2 className="font-medium text-lg">My AI Courses</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {courses ? (
           courses.map((course, index) => (
             <CourseCard

@@ -37,9 +37,9 @@ const ResumeItem: FC<PropType> = ({
     <div
       role="button"
       className="
-        cursor-pointer max-w-[164px] w-full
+        cursor-pointer max-w-[300px] w-full
         border 
-        rounded-lg transition-all h-[197px]
+        rounded-lg transition-all h-[400px]
         hover:border-primary
         hover:shadow-md
         shadow-primary
@@ -51,7 +51,7 @@ const ResumeItem: FC<PropType> = ({
         className="flex flex-col w-full 
           h-full items-center rounded-lg
           justify-center bg-[#fdfdfd] 
-          dark:bg-secondary"
+          "
       >
         <div
           className="w-full flex flex-1 px-1
@@ -59,7 +59,7 @@ const ResumeItem: FC<PropType> = ({
         >
           <div
             className="w-full flex flex-1 bg-white
-          dark:bg-gray-700
+          
           rounded-t-lg justify-center
            items-center
           "

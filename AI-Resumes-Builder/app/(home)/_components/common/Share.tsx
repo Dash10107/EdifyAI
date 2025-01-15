@@ -82,14 +82,14 @@ const Share = () => {
           }
           variant="secondary"
           className="bg-white border gap-1
-                   dark:bg-gray-800 !p-2
-                    lg:w-auto lg:p-4"
+                    !p-2
+                    lg:w-auto lg:p-6"
         >
           <div className="flex items-center gap-1">
-            <ShareIcon size="17px" />
-            <span className="flex">Share</span>
+            <ShareIcon size="18px" />
+            <span className="flex px-1 react-datepicker__year-text--highlighted text-md">Share</span>
           </div>
-          <ChevronDown size="14px" />
+          <ChevronDown size="16px" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -101,19 +101,17 @@ const Share = () => {
         {resumeInfo?.status === "public" ? (
           <div className="space-y-3">
             <div
-              className="
-                        flex gap-x-2 items-center
-                      "
+              className="flex gap-x-2 items-center"
             >
               <Globe size="15px" className="text-primary animate-pulse" />
-              <p className="font-medium text-xs text-primary">
+              <p className="text-lg font-semibold text-primary">
                 This resume is shareable, copy the link!
               </p>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center w-full">
               <input
-                className="flex-1 px-2 text-xs 
-              border rounded-l-md
+                className="flex-1 px-2 text-md
+              border rounded-l-md 
               h-8 bg-muted truncate
               "
                 value={url}
@@ -124,9 +122,9 @@ const Share = () => {
                 onClick={onCopy}
               >
                 {copied ? (
-                  <Check className="w-4 h-4" />
+                  <Check className="w-5 h-5" />
                 ) : (
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-5 h-5" />
                 )}
               </Button>
             </div>
@@ -136,7 +134,7 @@ const Share = () => {
               variant="outline"
               className="w-full border-primary 
               text-primary  
-              text-xs font-semibold"
+              text-md font-semibold"
               onClick={() => handleClick("private")}
               disabled={isPending}
             >

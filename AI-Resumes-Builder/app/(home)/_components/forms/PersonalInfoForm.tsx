@@ -100,17 +100,17 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
   return (
     <div>
       <div className="w-full">
-        <h2 className="font-bold text-lg">Personal Information</h2>
-        <p className="text-sm">Get Started with the personal information</p>
+        <h2 className="font-bold text-xl">Personal Information</h2>
+        <p className="text-lg text-gray-600">Get Started with the personal information</p>
       </div>
       <div>
         <form onSubmit={handleSubmit}>
           <div
             className="grid grid-cols-2 
-          mt-5 gap-3"
+          mt-5 gap-3 py-2"
           >
             <div>
-              <Label className="text-sm">First Name</Label>
+              <Label className="text-md px-2 text-gray-600">First Name</Label>
               <Input
                 name="firstName"
                 required
@@ -118,10 +118,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.firstName || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
             <div>
-              <Label className="text-sm">Last Name</Label>
+              <Label className="text-md px-2 text-gray-600">Last Name</Label>
               <Input
                 name="lastName"
                 required
@@ -129,10 +130,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.lastName || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
-            <div className="col-span-2">
-              <Label className="text-sm">Job Title</Label>
+            <div className="col-span-2 py-2">
+              <Label className="text-md px-2 text-gray-600">Job Title</Label>
               <Input
                 name="jobTitle"
                 required
@@ -140,10 +142,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.jobTitle || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
-            <div className="col-span-2">
-              <Label className="text-sm">Address</Label>
+            <div className="col-span-2 py-2">
+              <Label className="text-md text-gray-600">Address</Label>
               <Input
                 name="address"
                 required
@@ -151,10 +154,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.address || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
-            <div className="col-span-2">
-              <Label className="text-sm">Phone number</Label>
+            <div className="col-span-2 py-2">
+              <Label className="text-md text-gray-600">Phone number</Label>
               <Input
                 name="phone"
                 required
@@ -162,10 +166,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.phone || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
-            <div className="col-span-2">
-              <Label className="text-sm">Email</Label>
+            <div className="col-span-2 py-2">
+              <Label className="text-md text-gray-600">Email</Label>
               <Input
                 name="email"
                 required
@@ -173,12 +178,13 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
                 placeholder=""
                 value={personalInfo?.email || ""}
                 onChange={handleChange}
+                className="text-md my-1"
               />
             </div>
           </div>
 
           <Button
-            className="mt-4"
+            className="mt-4 text-md font-semibold py-2"
             type="submit"
             disabled={
               isPending || resumeInfo?.status === "archived" ? true : false

@@ -19,29 +19,27 @@ const ResumeForm = () => {
   };
   return (
     <div
-      className="flex-1 w-full lg:sticky
-  lg:top-16
+      className="flex-1 w-full lg:sticky border rounded-lg my-4
+  lg:top-20
   "
     >
       <div
         className="shadow-md rounded-md bg-white
-      !border-t-primary !border-t-4 
-      dark:bg-card dark:border
-      dark:border-gray-800
+ 
       "
       >
         <div
           className="
-        flex items-center gap-1
+        flex items-center gap-3
         px-3 justify-end
-        border-b py-[7px] min-h-10
+        border-b py-3 min-h-10
         "
         >
           {activeFormIndex > 1 && (
             <Button
               variant="outline"
               size="default"
-              className="!px-2 !py-1 !h-auto"
+              className="!px-2 !py-1 !h-auto text-md font-semibold"
               onClick={() => setActiveFormIndex(activeFormIndex - 1)}
             >
               <ArrowLeft size="16px" />
@@ -52,7 +50,7 @@ const ResumeForm = () => {
           <Button
             variant="outline"
             size="default"
-            className="!px-2 !py-1 !h-auto"
+            className="!px-2 !py-1 !h-auto text-md font-semibold"
             disabled={
               activeFormIndex === 5 || resumeInfo?.status === "archived"
                 ? true
@@ -61,7 +59,7 @@ const ResumeForm = () => {
             onClick={handleNext}
           >
             Next
-            <ArrowRight size="16px" />
+            <ArrowRight size="20px" />
           </Button>
         </div>
         <div className="px-5 py-3 pb-5">

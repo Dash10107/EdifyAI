@@ -17,7 +17,7 @@ export default async function PathPage({ params }: { params: { slug: string } })
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-8">
           <Button variant="ghost" asChild className="-ml-4">
-            <Link href="/path" className="flex items-center gap-2">
+            <Link href="/course-dashboard/path" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to paths
             </Link>

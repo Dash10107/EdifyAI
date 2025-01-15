@@ -105,8 +105,8 @@ const EducationForm = (props: { handleNext: () => void }) => {
   return (
     <div>
       <div className="w-full">
-        <h2 className="font-bold text-lg">Education</h2>
-        <p className="text-sm">Add your education details</p>
+        <h2 className="font-bold text-xl">Education</h2>
+        <p className="text-lg text-gray-600">Add your education details</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div
@@ -138,37 +138,40 @@ const EducationForm = (props: { handleNext: () => void }) => {
                 )}
 
                 <div className="col-span-2">
-                  <Label className="text-sm">University Name</Label>
+                  <Label className="text-md text-gray-600 px-2">University Name</Label>
                   <Input
                     name="universityName"
                     placeholder=""
                     required
                     value={item?.universityName || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
                 <div>
-                  <Label className="text-sm">Degree</Label>
+                  <Label className="text-md text-gray-600 px-2">Degree</Label>
                   <Input
                     name="degree"
                     placeholder=""
                     required
                     value={item?.degree || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
                 <div>
-                  <Label className="text-sm">Major</Label>
+                  <Label className="text-md text-gray-600 px-2">Major</Label>
                   <Input
                     name="major"
                     placeholder=""
                     required
                     value={item?.major || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
                 <div>
-                  <Label className="text-sm">Start Date</Label>
+                  <Label className="text-md text-gray-600 px-2">Start Date</Label>
                   <Input
                     name="startDate"
                     type="date"
@@ -176,10 +179,11 @@ const EducationForm = (props: { handleNext: () => void }) => {
                     required
                     value={item?.startDate || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
                 <div>
-                  <Label className="text-sm">End Date</Label>
+                  <Label className="text-md text-gray-600 px-2">End Date</Label>
                   <Input
                     name="endDate"
                     type="date"
@@ -187,16 +191,18 @@ const EducationForm = (props: { handleNext: () => void }) => {
                     required
                     value={item?.endDate || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
                 <div className="col-span-2 mt-1">
-                  <Label className="text-sm">Description</Label>
+                  <Label className="text-md text-gray-600 px-2">Description</Label>
                   <Textarea
                     name="description"
                     placeholder=""
                     required
                     value={item.description || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="text-md mt-1"
                   />
                 </div>
               </div>
@@ -204,7 +210,7 @@ const EducationForm = (props: { handleNext: () => void }) => {
               {index === educationList.length - 1 &&
                 educationList.length < 5 && (
                   <Button
-                    className="gap-1 mt-1 text-primary 
+                    className="gap-1 mt-1 text-primary text-md font-semibold 
                           border-primary/50"
                     variant="outline"
                     type="button"
@@ -218,7 +224,7 @@ const EducationForm = (props: { handleNext: () => void }) => {
             </div>
           ))}
         </div>
-        <Button className="mt-4" type="submit" disabled={isPending}>
+        <Button className="mt-4 text-md font-semibold" type="submit" disabled={isPending}>
           {isPending && <Loader size="15px" className="animate-spin" />}
           Save Changes
         </Button>

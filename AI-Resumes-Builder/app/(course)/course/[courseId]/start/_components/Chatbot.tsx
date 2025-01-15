@@ -1,5 +1,5 @@
 'use client'
-
+import 'regenerator-runtime/runtime'
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useChat } from 'ai/react'
@@ -96,11 +96,11 @@ export default function ChatbotModal(
           }
     
           const data = await response.json();
-          console.log('Chat response:', data);
-          speakMessage(data.message);
+          console.log('Chat response:', data.result);
+          speakMessage(data.result);
             setInput('');
             messages.push({
-                content: data.message, role: 'system',
+                content: data.result, role: 'system',
                 id:  (messages.length + 1).toString(),
             });
      }
@@ -245,4 +245,3 @@ export default function ChatbotModal(
     </>
   )
 }
-

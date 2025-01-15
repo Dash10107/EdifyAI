@@ -49,7 +49,7 @@ export default function EventsPage() {
   };
 
   const filterAndSortEvents = () => {
-    let filtered = events.filter((event) =>
+    let filtered = events?.filter((event) =>
       event.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -105,7 +105,7 @@ export default function EventsPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           layout
         >
-          {filteredEvents.map((event) => (
+          {filteredEvents?.map((event) => (
             <motion.div
               key={event.title}
               layout

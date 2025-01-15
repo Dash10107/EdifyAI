@@ -1,12 +1,15 @@
-import { ChapterContentType, ChapterType, CourseType } from "@/types/resume.type";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
 import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
+import { Editor } from "@monaco-editor/react";
+
+// Types
+import { ChapterContentType, ChapterType, CourseType } from "@/types/resume.type";
+import { executeCode } from "../_utils/codeExecution";
 
 type ChapterContentProps = {
-  course:CourseType;
+  course: CourseType;
   chapter: ChapterType | null;
   content: ChapterContentType | null;
   handleNext: () => void;
@@ -16,69 +19,116 @@ const videoOpts = {
   height: "390",
   width: "640",
   playerVars: {
-    // https://developers.google.com/youtube/player_parameters
     autoplay: 0,
   },
 };
 
-const ChapterContent = ({course, chapter, content,handleNext }: ChapterContentProps) => {
-//   console.log(content);
-
+const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContentProps) => {
+  const [outputs, setOutputs] = useState<{ [key: string]: string | null }>({});
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({});
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   };
 
+  const runCode = async (code: string, language: string, exampleId: string) => {
+    setLoading(prev => ({ ...prev, [exampleId]: true }));
+    setOutputs(prev => ({ ...prev, [exampleId]: null }));
+
+    try {
+      const result = await executeCode(language, code);
+      setOutputs(prev => ({
+        ...prev,
+        [exampleId]: result.run.output || "Code executed successfully, but there was no output."
+      }));
+    } catch (error) {
+      console.error("Error executing code:", error);
+      setOutputs(prev => ({
+        ...prev,
+        [exampleId]: `Error: ${error.message || "An unexpected error occurred"}`
+      }));
+    } finally {
+      setLoading(prev => ({ ...prev, [exampleId]: false }));
+    }
+  };
 
   return (
-    <div className="p-10">
-      <h2 className="font-medium text-2xl">{chapter?.chapter_name}</h2>
-      <p className="text-gray-500">{chapter?.description}</p>
+    <div className="p-10 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors">
+      <h2 className="font-semibold text-3xl text-gray-800 dark:text-gray-100 mb-2">
+        {chapter?.chapter_name}
+      </h2>
+      <p className="text-gray-600 dark:text-gray-400 mb-6">{chapter?.description}</p>
 
-      {/* video */}
+      {/* Video Section */}
       <div className="flex justify-center my-6">
-        <YouTube
-          videoId={content?.videoId}
-          opts={videoOpts}
-          onReady={onPlayerReady}
-        />
+        <YouTube videoId={content?.videoId} opts={videoOpts} onReady={onPlayerReady} />
       </div>
 
+      {/* Content Section */}
       <div>
-        {content?.content.map((item, index) => (
-            <div key={index} className="my-5 bg-sky-50 rounded-lg p-5">
-              <h2 className="font-medium text-lg">{item.title}</h2>
-              <ReactMarkdown className={"mt-3"}>
-                {item.explanation}
-              </ReactMarkdown>
-              {item.code_examples && item.code_examples.length > 0 && (
-                <div className="bg-black text-white p-10 mt-3 rounded-md">
-                  {item.code_examples.map((example, idx) => (
-                    <pre key={idx}>
-                      {/* <code>{example.code}</code> */}
-                      <code>
-                        {Array.isArray(example.code)
-                          ? example.code
-                              .join("")
-                              .replace("<precode>", "")
-                              .replace("</precode>", "")
-                          : (example.code as string)
-                              .replace("<precode>", "")
-                              .replace("</precode>", "")}
-                      </code>
-                    </pre>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+        {content?.content.map((item, contentIndex) => (
+          <div key={contentIndex} className="my-5 bg-gray-200 dark:bg-gray-800 rounded-lg p-6 shadow-md">
+            <h2 className="font-medium text-xl text-gray-800 dark:text-gray-100 mb-3">
+              {item.title}
+            </h2>
+            <ReactMarkdown className="prose dark:prose-dark mb-3">
+              {item.explanation}
+            </ReactMarkdown>
+            {item.code_examples && item.code_examples.length > 0 && (
+              <div className="mt-3">
+                {item.code_examples.map((example, exampleIndex) => {
+                  const exampleId = `${contentIndex}-${exampleIndex}`;
+                  return (
+                    <div key={exampleId} className="mb-6">
+                      <Editor
+                        height="300px"
+                        defaultLanguage={example.language || "python"}
+                        value={Array.isArray(example.code)
+                          ? example.code.join("\n").replace("<pre><code>", "").replace("</pre></code>", "")
+                          : (example.code as string).replace("<pre><code>", "").replace("</code></pre>", "")}
+                        options={{
+                          minimap: { enabled: true },
+                          scrollBeyondLastLine: false,
+                          fontSize: 14,
+                          theme: "vs-dark",
+                        }}
+                      />
+                      <Button
+                        onClick={() => runCode(
+                          Array.isArray(example.code)
+                            ? example.code.join("\n").replace("<pre><code>", "").replace("</pre></code>", "")
+                            : (example.code as string).replace("<pre><code>", "").replace("</code></pre>", ""),
+                          example.language || "python",
+                          exampleId
+                        )}
+                        className="mt-3 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
+                        disabled={loading[exampleId]}
+                      >
+                        {loading[exampleId] ? "Running..." : "Run Code"}
+                      </Button>
+                      {/* Output Section */}
+                      {outputs[exampleId] !== undefined && outputs[exampleId] !== null && (
+                        <div className="mt-4 p-4 bg-gray-300 dark:bg-gray-700 rounded-lg shadow-inner">
+                          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Output:</h3>
+                          <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap overflow-x-auto">
+                            {outputs[exampleId]}
+                          </pre>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-     {/* Take a Quiz button */}
-     <div className="mt-6 flex justify-center">
+
+      {/* Take a Quiz Button */}
+      <div className="mt-6 flex justify-center">
         <Button
           onClick={handleNext}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"
+          className="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
         >
           Take a Quiz
         </Button>
@@ -88,3 +138,4 @@ const ChapterContent = ({course, chapter, content,handleNext }: ChapterContentPr
 };
 
 export default ChapterContent;
+

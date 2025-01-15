@@ -41,15 +41,15 @@ const ResumeTitle: FC<ResumeTitleProps> = ({
   return (
     <div
       className="flex items-center
-  gap-1 pr-4
+  gap-1 pr-4 
     "
     >
-      <FileText className="stroke-primary" size="20px" />
+      <FileText className="stroke-primary" size="24px" />
       <h5
         className={cn(
           `
-        text-[20px] px-1 text-gray-700
-         dark:text-gray-300 font-semibold
+        text-2xl px-1 text-gray-700
+          font-semibold
          opacity-100
                   `,
           {
@@ -67,11 +67,11 @@ const ResumeTitle: FC<ResumeTitleProps> = ({
       </h5>
       <span>
         {status === "private" ? (
-          <Lock size="14px" className="" />
+          <Lock size="20px" className="" />
         ) : status === "public" ? (
-          <Globe size="14px" />
+          <Globe size="20px" />
         ) : status === "archived" ? (
-          <Trash2 size="14px" />
+          <Trash2 size="20px" />
         ) : null}
       </span>
     </div>

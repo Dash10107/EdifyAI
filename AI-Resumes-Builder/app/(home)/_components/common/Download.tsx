@@ -66,13 +66,13 @@ const Download = (props: {
       disabled={isLoading || loading || status === "archived" ? true : false}
       variant="secondary"
       className="bg-white border gap-1
-                   dark:bg-gray-800 !p-2
-                    min-w-9 lg:min-w-auto lg:p-4"
+                    !p-2
+                    min-w-12 lg:min-w-auto lg:p-4"
       onClick={handleDownload}
     >
       <div className="flex items-center gap-1">
-        <DownloadCloud size="17px" />
-        <span className="hidden lg:flex">
+        <DownloadCloud size="18px" />
+        <span className="hidden lg:flex px-1 text-md">
           {loading ? "Generating PDF" : "Download Resume"}
         </span>
       </div>

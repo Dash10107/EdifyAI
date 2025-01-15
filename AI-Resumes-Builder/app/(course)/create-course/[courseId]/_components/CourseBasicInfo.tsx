@@ -40,13 +40,14 @@ const CourseBasicInfo = ({
   return (
     <div className="p-10 border rounded-xl shadow-sm mt-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="">
-          <h2 className="font-bold text-3xl">
+        <div className="flex  items-center">
+          <div>
+          <h2 className="font-bold text-3xl ">
             {courseInfo?.courseOutput.topic}
             {edit && (
               <EditCourseBasicInfo
-                courseInfo={courseInfo}
-                onRefresh={() => onRefresh(true)}
+              courseInfo={courseInfo}
+              onRefresh={() => onRefresh(true)}
               />
             )}
           </h2>
@@ -56,6 +57,7 @@ const CourseBasicInfo = ({
           <h2 className="font-medium mt-2 flex gap-2 items-center text-primary">
             <LuPuzzle /> {courseInfo?.category}
           </h2>
+          </div>
 
           {!edit && (
             <Link href={`/course/${courseInfo?.courseId}/start`}>
@@ -65,12 +67,10 @@ const CourseBasicInfo = ({
         </div>
         <div>
           <label htmlFor="image-upload">
-            <Image
+            <img
               src={selectedImage ? selectedImage : "/thumbnail.png"}
               alt="image"
-              width={200}
-              height={200}
-              className={`w-full rounded-xl h-[250px] object-cover ${
+              className={`w-full rounded-xl object-fit ${
                 edit && "cursor-pointer"
               }`}
             />

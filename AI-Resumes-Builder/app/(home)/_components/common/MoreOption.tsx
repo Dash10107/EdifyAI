@@ -59,7 +59,7 @@ const MoreOption = () => {
             variant="secondary"
             size="icon"
             className="bg-white border
-             dark:bg-gray-800"
+             "
           >
             <MoreHorizontal />
           </Button>
@@ -69,7 +69,7 @@ const MoreOption = () => {
             {resumeInfo?.status === "archived" ? (
               <Button
                 variant="ghost"
-                className="gap-1 !py-2 !cursor-pointer"
+                className="gap-1 !py-6 !cursor-pointer"
                 disabled={isPending}
                 onClick={() => handleClick("private")}
               >
@@ -80,11 +80,11 @@ const MoreOption = () => {
             ) : (
               <Button
                 variant="ghost"
-                className="gap-1  !py-2 !cursor-pointer"
+                className="gap-1 text-md !py-2 !px-4 !cursor-pointer"
                 disabled={isPending}
                 onClick={() => handleClick("archived")}
               >
-                <Trash2 size="15px" />
+                <Trash2 size="16px" />
                 Move to Trash
                 {isPending && <Loader size="15px" className="animate-spin" />}
               </Button>

@@ -64,4 +64,21 @@ import {
     updatedAt: timestamp('updated_at').defaultNow(),
   });
   
+  export const forumTopics = pgTable('forum_topics', {
+    id: serial('id').primaryKey(),
+    courseId: integer('course_id').notNull().references(() => CourseList.id),
+    userId: varchar('user_id').notNull(),
+    title: text('title').notNull(),
+    content: text('content').notNull(),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  });
   
+  export const forumReplies = pgTable('forum_replies', {
+    id: serial('id').primaryKey(),
+    topicId: integer('topic_id').notNull().references(() => forumTopics.id),
+    userId: varchar('user_id').notNull(),
+    content: text('content').notNull(),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  });

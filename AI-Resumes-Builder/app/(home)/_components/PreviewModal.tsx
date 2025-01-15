@@ -24,18 +24,18 @@ const PreviewModal = () => {
             }
             variant="secondary"
             className="bg-white border gap-1
-                   dark:bg-gray-800 !p-2 w-9
+                    !p-2 w-9
                     lg:w-auto lg:p-4"
           >
             <div className="flex items-center gap-1">
-              <Eye size="17px" />
-              <span className="hidden  lg:flex">Preview</span>
+              <Eye size="18px" />
+              <span className="hidden  lg:flex text-md px-1">Preview</span>
             </div>
           </Button>
         </DialogTrigger>
         <DialogContent
           className="
-                   sm:max-w-4xl p-0
+                   sm:max-w-6xl p-0
                    w-full max-h-[90vh]
                    lg:max-h-[95vh]
                    overflow-y-auto
@@ -45,13 +45,12 @@ const PreviewModal = () => {
           <DialogHeader
             className="!pb-0
                   !m-0 sticky top-0
-                  backdrop-blur bg-white
-                   dark:bg-black/80 z-10
+                  backdrop-blur bg-white z-10
                   "
           >
             <DialogTitle
               className="
-                      flex items-center gap-1 text-[20px]
+                      flex items-center gap-1 text-xl
                       pt-2 px-3 font-semibold opacity-100
                       
                       "

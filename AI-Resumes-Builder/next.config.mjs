@@ -10,7 +10,9 @@ const nextConfig = {
             "unsplash.com",
             "plus.unsplash.com",
             "firebasestorage.googleapis.com",
-            "img.clerk.com"
+            "img.clerk.com",
+            "lh3.googleusercontent.com",
+            "hebbkx1anhila5yf.public.blob.vercel-storage.com"
         ],
     },
     async headers() {

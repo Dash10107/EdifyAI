@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(mock)/mock/page.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(mock)/mock/page.tsx", "app/(landingPage)/_components/Hero.jsx", "app/(landingPage)/page.jsx", "components/nav-bar/index.jsx", "components/dictaphone.jsx"],
   "exclude": ["node_modules"]
 }

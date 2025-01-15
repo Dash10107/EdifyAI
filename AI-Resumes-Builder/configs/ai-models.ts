@@ -52,6 +52,30 @@ export const generateCourseLayout = model.startChat({
   ],
 });
 
+
+
+export const generateRecommendations = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        {
+          text: "Generate personalized learning recommendations for an user who just now completed course Python : Complete Guide based on their interests, skills, and goals.  The response should include a list of recommended courses, tutorials, or resources tailored to the user's profile.",
+        },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {
+          text:'```json\n[\n {\n   "title": "Data Science Fundamentals",\n   "description": "Learn the basics of data science, including data analysis, visualization, and machine learning concepts.",\n   "category": "Data Science",\n   "level": "Intermediate",\n   "duration": "4 weeks"\n },\n {\n   "title": "JavaScript for Beginners",\n   "description": "Get started with JavaScript programming, covering syntax, functions, and DOM manipulation.",\n   "category": "Web Development",\n   "level": "Beginner",\n   "duration": "3 weeks"\n },\n {\n   "title": "Python Automation with Selenium",\n   "description": "Automate web tasks using Python and Selenium, a powerful tool for browser automation.",\n   "category": "Automation",\n   "level": "Advanced",\n   "duration": "2 weeks"\n }\n]\n```',
+        },
+      ],
+    },
+  ],
+});
+
 export const generateCourseChapters = model.startChat({
   generationConfig,
   history: [
@@ -164,3 +188,5 @@ This example demonstrates the structure and content expected for a learning path
     },
   ],
 });
+
+

@@ -9,6 +9,7 @@ import { useResumeContext } from "@/context/resume-info-provider";
 import useUpdateDocument from "@/features/document/use-update-document";
 import { generateThumbnail } from "@/lib/helper";
 import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 const initialState = {
   name: "",
@@ -93,8 +94,8 @@ const SkillsForm = () => {
   return (
     <div>
       <div className="w-full">
-        <h2 className="font-bold text-lg">Skills</h2>
-        <p className="text-sm">Add your skills information</p>
+        <h2 className="font-bold text-xl">Skills</h2>
+        <p className="text-lg text-gray-600">Add your skills information</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div
@@ -123,7 +124,7 @@ const SkillsForm = () => {
                 )}
 
                 <div className="flex-1">
-                  <Label className="text-sm">Name</Label>
+                  <Label className="text-md px-2 text-gray-600">Name</Label>
                   <Input
                     name="name"
                     placeholder=""
@@ -133,6 +134,7 @@ const SkillsForm = () => {
                     onChange={(e) =>
                       handleChange(e.target.value, "name", index)
                     }
+                    className="text-md "
                   />
                 </div>
 
@@ -151,7 +153,7 @@ const SkillsForm = () => {
               {index === skillsList.length - 1 && skillsList.length < 15 && (
                 <Button
                   className="gap-1 mt-1 text-primary 
-                  border-primary/50"
+                  border-primary/50 text-md font-semibold"
                   variant="outline"
                   type="button"
                   disabled={isPending}
@@ -164,10 +166,12 @@ const SkillsForm = () => {
             </div>
           ))}
         </div>
-        <Button className="mt-4" type="submit" disabled={isPending}>
+        <Link href={'/dashboard'}>
+        <Button className="mt-4 text-md font-semibold" type="submit" disabled={isPending}>
           {isPending && <Loader size="15px" className="animate-spin" />}
           Save & Done
         </Button>
+        </Link>
       </form>
     </div>
   );

@@ -86,16 +86,16 @@ const RichTextEditor = (props: {
   return (
     <div>
       <div className="flex items-center justify-between my-2">
-        <Label>Work Summary</Label>
+        <Label className="text-md">Work Summary</Label>
         <Button
           variant="outline"
           type="button"
-          className="gap-1"
+          className="gap-1 text-md font-semibold"
           disabled={loading}
           onClick={GenerateSummaryFromAI}
         >
           <>
-            <Sparkles size="15px" className="text-purple-500" />
+            <Sparkles size="15px" className="text-purple-500 " />
             Generate with AI
           </>
           {loading && <Loader size="13px" className="animate-spin" />}
@@ -109,7 +109,7 @@ const RichTextEditor = (props: {
             style: {
               resize: "vertical",
               lineHeight: 1.2,
-              fontSize: "13.5px",
+              fontSize: "1rem",
             },
           }}
           onChange={(e) => {

@@ -9,13 +9,16 @@ import { toast } from "sonner";
 import { chatSession } from "@/utils/GeminiAIModel";
 import { db } from "@/utils/db";
 import { UserAnswer } from "@/utils/schema";
-import { useUser } from "@clerk/nextjs";
+import {
+  LogoutLink,
+  useKindeBrowserClient,
+} from "@kinde-oss/kinde-auth-nextjs";
 import moment from "moment";
 
 function RecordAnswerSection({ activeQuestionIndex, mockInterViewQuestion,interviewData }) {
   const [userAnswer, setUserAnswer] = useState("");
   const [loading,setLoading]=useState(false)
-  const {user}=useUser()
+  const {user}=useKindeBrowserClient()
   const {
     error,
     interimResult,

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { db } from "@/configs/db";
 import { CourseList } from "@/db/schema/chapter";
 import { eq } from "drizzle-orm";
-
+import { useRouter } from 'next/navigation';
 type QuizModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -13,80 +13,86 @@ type QuizModalProps = {
   totalChapters: number;
 };
 
-const QuizModal = ({ isOpen, onClose, questions,courseId,totalChapters }: QuizModalProps) => {
+const QuizModal = ({
+  isOpen,
+  onClose,
+  questions,
+  courseId,
+  totalChapters,
+}: QuizModalProps) => {
   const [answers, setAnswers] = useState<string[]>(new Array(questions.length).fill(""));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showResults, setShowResults] = useState(false);
-
+  const router = useRouter();
   const handleAnswerChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
+    } else {
+      // Calculate and show results when at the last question
+      let score = 0;
+      answers.forEach((answer, index) => {
+        if (answer === questions[index].answer) score++;
+      });
+      setShowResults(true);
 
-  const handlePrev = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
+      const percentage = (score / questions.length) * 100;
+      if (percentage < 70) {
+        return;
+      }
 
-  const handleSubmit = async () => {
-    let score = 0;
-    answers.forEach((answer, index) => {
-      if (answer === questions[index].answer) score++;
-    });
-    setShowResults(true);
-  
-    const percentage = (score / questions.length) * 100;
-  
-    // Fetch the current progress from the database
-    const currentProgress = await db
-      .select({ progress: CourseList.progress })
-      .from(CourseList)
-      .where(eq(CourseList.courseId, courseId));
-  
-    if (currentProgress?.[0]) {
-      // Calculate the progress increment as a percentage
-      const progressIncrement = 100 / totalChapters; // Divide by total chapters to get the increment per chapter
-  
-      // Add the increment to the existing progress
-      let newProgress = currentProgress[0].progress + progressIncrement;
-  
-      // Ensure the progress does not exceed 100%
-      newProgress = Math.min(newProgress, 100);
-  
-      // Update the progress in the database
-      await db
-        .update(CourseList)
-        .set({ progress: newProgress }) // Store as a percentage (0–100)
+      const currentProgress = await db
+        .select({ progress: CourseList.progress })
+        .from(CourseList)
         .where(eq(CourseList.courseId, courseId));
-    }
+
+      if (currentProgress?.[0]) {
+        const progressIncrement = 100 / totalChapters;
+        let newProgress = currentProgress[0].progress + progressIncrement;
+        newProgress = Math.min(newProgress, 100);
+
+        await db
+          .update(CourseList)
+          .set({ progress: newProgress })
+          .where(eq(CourseList.courseId, courseId));
+      }
+
+      
+      // navigate to certificate page with param as course name if its the last chapter of the course 
+
+// Check if it's the last chapter of the course
+if (currentProgress?.[0] && currentProgress[0].progress >= 100 - (100 / totalChapters)) {
+  router.push(`/certificate/${courseId}`);
+}
+
+}
   };
-  
 
   const handleClose = () => {
-    setAnswers(new Array(questions.length).fill("")); // Reset answers
-    setShowResults(false); // Hide result view
-    setCurrentQuestionIndex(0); // Reset question index
-    onClose(); // Close the modal
+    setAnswers(new Array(questions.length).fill(""));
+    setShowResults(false);
+    setCurrentQuestionIndex(0);
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Quiz</h2>
+    <div
+      className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-80"
+    >
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg w-[600px] max-w-full shadow-lg">
+        <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800 dark:text-gray-200">
+          Quiz
+        </h2>
 
         {!showResults ? (
           <>
-            {/* Question Navigation */}
             <motion.div
               key={currentQuestionIndex}
               initial={{ opacity: 0 }}
@@ -95,16 +101,22 @@ const QuizModal = ({ isOpen, onClose, questions,courseId,totalChapters }: QuizMo
               transition={{ duration: 0.5 }}
             >
               <div className="mb-4">
-                <h3 className="text-lg">{questions[currentQuestionIndex].question}</h3>
+                <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                  {currentQuestionIndex + 1}.{" "}
+                  {questions[currentQuestionIndex].question}
+                </h3>
                 {questions[currentQuestionIndex].options.map((option, optionIndex) => (
-                  <label key={optionIndex} className="block mt-2">
+                  <label
+                    key={optionIndex}
+                    className="block mt-2 text-gray-600 dark:text-gray-400"
+                  >
                     <input
                       type="radio"
                       name={`question-${currentQuestionIndex}`}
                       value={option}
                       checked={answers[currentQuestionIndex] === option}
                       onChange={() => handleAnswerChange(currentQuestionIndex, option)}
-                      className="mr-2"
+                      className="mr-2 accent-blue-600 dark:accent-blue-400"
                     />
                     {option}
                   </label>
@@ -112,10 +124,13 @@ const QuizModal = ({ isOpen, onClose, questions,courseId,totalChapters }: QuizMo
               </div>
             </motion.div>
 
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-between mt-6">
               <Button
-                onClick={handlePrev}
-                className="py-2 px-4 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+                onClick={() =>
+                  currentQuestionIndex > 0 &&
+                  setCurrentQuestionIndex(currentQuestionIndex - 1)
+                }
+                className="py-2 px-4 bg-gray-600 text-white rounded-md hover:bg-gray-700 disabled:opacity-50 dark:bg-gray-700 dark:hover:bg-gray-600"
                 disabled={currentQuestionIndex === 0}
               >
                 Previous
@@ -123,30 +138,23 @@ const QuizModal = ({ isOpen, onClose, questions,courseId,totalChapters }: QuizMo
 
               <Button
                 onClick={handleNext}
-                className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-400"
                 disabled={answers[currentQuestionIndex] === ""}
               >
-                Next
+                {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
               </Button>
             </div>
-
-            <Button
-              onClick={handleSubmit}
-              className="mt-4 py-2 px-6 bg-green-600 text-white rounded-md hover:bg-green-700 w-full"
-              disabled={answers.includes("")}
-            >
-              Submit Quiz
-            </Button>
           </>
         ) : (
           <div>
-            <h3 className="text-lg text-center">
+            <h3 className="text-lg text-center font-medium text-gray-700 dark:text-gray-200">
               Your Score:{" "}
-              {answers.filter((answer, index) => answer === questions[index].answer).length} / {questions.length}
+              {answers.filter((answer, index) => answer === questions[index].answer).length}{" "}
+              / {questions.length}
             </h3>
             <Button
               onClick={handleClose}
-              className="mt-4 py-2 px-6 bg-gray-600 text-white rounded-md hover:bg-gray-700 w-full"
+              className="mt-6 py-2 px-6 bg-gray-600 text-white rounded-md hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 w-full"
             >
               Close
             </Button>

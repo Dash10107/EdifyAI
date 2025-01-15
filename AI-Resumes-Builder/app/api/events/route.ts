@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { scrapeHackathons, scrapeMeetups } from '../lib/scrape';
 
 interface Event {
   title: string;
@@ -10,19 +11,16 @@ interface Event {
 
 export async function GET() {
   try {
-    const hackathonsResponse = await fetch('http://localhost:5000/hackathons');
-    const meetupsResponse = await fetch('http://localhost:5000/meetups');
-
-    const hackathons = await hackathonsResponse.json();
-    const meetups = await meetupsResponse.json();
+    const hackathons = await scrapeHackathons();
+    const meetups = await scrapeMeetups();
 
     const events: Event[] = [
-      ...hackathons.map((h: any) => ({
+      ...hackathons.map((h) => ({
         ...h,
         date: h.dates,
         type: 'hackathon' as const,
       })),
-      ...meetups.map((m: any) => ({
+      ...meetups.map((m) => ({
         ...m,
         type: 'meetup' as const,
       })),

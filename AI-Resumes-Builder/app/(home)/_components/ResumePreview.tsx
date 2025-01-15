@@ -16,10 +16,8 @@ const ResumePreview = () => {
       id="resume-preview-id"
       className={cn(`
         shadow-lg bg-white w-full flex-[1.02]
-        h-full p-10 !font-open-sans
-        dark:border dark:bg-card 
-        dark:border-b-gray-800 
-        dark:border-x-gray-800
+        h-full p-10 !font-open-sans mt-4 rounded-lg
+        
         `)}
       style={{
         borderTop: `13px solid ${resumeInfo?.themeColor}`,

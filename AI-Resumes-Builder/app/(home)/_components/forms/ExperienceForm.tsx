@@ -118,10 +118,10 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
   return (
     <div>
       <div className="w-full">
-        <h2 className="font-bold text-lg">Professional Experience</h2>
-        <p className="text-sm">Add previous job experience</p>
+        <h2 className="font-bold text-xl">Professional Experience</h2>
+        <p className="text-lg text-gray-600">Add previous job experience</p>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="py-2">
         <div
           className="border w-full h-auto
               divide-y-[1px] rounded-md px-3 pb-4 my-5
@@ -150,51 +150,55 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
                 )}
 
                 <div>
-                  <Label className="text-sm">Position title</Label>
+                  <Label className="text-md text-gray-600 px-2">Position title</Label>
                   <Input
                     name="title"
                     placeholder=""
                     required
                     value={item?.title || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
                 <div>
-                  <Label className="text-sm">Company Name</Label>
+                  <Label className="text-md text-gray-600 px-2">Company Name</Label>
                   <Input
                     name="companyName"
                     placeholder=""
                     required
                     value={item?.companyName || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
                 <div>
-                  <Label className="text-sm">City</Label>
+                  <Label className="text-md text-gray-600 px-2">City</Label>
                   <Input
                     name="city"
                     placeholder=""
                     required
                     value={item?.city || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
                 <div>
-                  <Label className="text-sm">State</Label>
+                  <Label className="text-md text-gray-600 px-2">State</Label>
                   <Input
                     name="state"
                     placeholder=""
                     required
                     value={item?.state || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
                 <div>
-                  <Label className="text-sm">Start Date</Label>
+                  <Label className="text-md text-gray-600 px-2">Start Date</Label>
                   <Input
                     name="startDate"
                     type="date"
@@ -202,11 +206,12 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
                     required
                     value={item?.startDate || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
                 <div>
-                  <Label className="text-sm">End Date</Label>
+                  <Label className="text-md text-gray-600 px-2">End Date</Label>
                   <Input
                     name="endDate"
                     type="date"
@@ -214,6 +219,7 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
                     required
                     value={item?.endDate || ""}
                     onChange={(e) => handleChange(e, index)}
+                    className="my-1 text-md"
                   />
                 </div>
 
@@ -232,7 +238,7 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
               {index === experienceList.length - 1 &&
                 experienceList.length < 5 && (
                   <Button
-                    className="gap-1 mt-1 text-primary 
+                    className="gap-1 mt-1 text-primary text-md font-semibold
                           border-primary/50"
                     variant="outline"
                     type="button"
@@ -245,7 +251,7 @@ const ExperienceForm = (props: { handleNext: () => void }) => {
             </div>
           ))}
         </div>
-        <Button className="mt-4" type="submit" disabled={isPending}>
+        <Button className="mt-4 text-md font-semibold" type="submit" disabled={isPending}>
           {isPending && <Loader size="15px" className="animate-spin" />}
           Save Changes
         </Button>
