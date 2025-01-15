@@ -1,6 +1,6 @@
 import { Server } from 'socket.io';
 
-const SocketHandler = (req, res) => {
+const SocketHandler = (req: any, res: any) => {
   if (res.socket.server.io) {
     console.log('Socket is already running');
   } else {
@@ -37,4 +37,7 @@ const SocketHandler = (req, res) => {
   res.end();
 };
 
-export default SocketHandler;
+// Export the handler in the required Next.js 13+ format
+export const GET = async (req: Request, res: any) => {
+  SocketHandler(req, res);
+};
