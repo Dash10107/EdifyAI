@@ -4,8 +4,8 @@ import React, { ReactNode } from "react";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 export const metadata: Metadata = {
-  title: "LinkStop",
-  description: "video-Web Conferencing",
+  title: "EdifyAI",
+  description: "EdifyAI",
   icons: ["/icons/logo.png"],
 };
 
