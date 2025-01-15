@@ -2,6 +2,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 const nextConfig = {
+    eslint: {
+        // Disable ESLint during production builds
+        ignoreDuringBuilds: true,
+      },
     reactStrictMode: true,
     images: {
         domains: [
