@@ -32,28 +32,28 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
   };
 
   const runCode = async (code: string, language: string, exampleId: string) => {
-    setLoading(prev => ({ ...prev, [exampleId]: true }));
-    setOutputs(prev => ({ ...prev, [exampleId]: null }));
+    setLoading((prev) => ({ ...prev, [exampleId]: true }));
+    setOutputs((prev) => ({ ...prev, [exampleId]: null }));
 
     try {
       const result = await executeCode(language, code);
-      setOutputs(prev => ({
+      setOutputs((prev) => ({
         ...prev,
-        [exampleId]: result.run.output || "Code executed successfully, but there was no output."
+        [exampleId]: result.run.output || "Code executed successfully, but there was no output.",
       }));
     } catch (error) {
       console.error("Error executing code:", error);
-      setOutputs(prev => ({
+      setOutputs((prev) => ({
         ...prev,
-        [exampleId]: `Error: ${error.message || "An unexpected error occurred"}`
+        [exampleId]: `Error: ${error instanceof Error ? error.message : "An unexpected error occurred"}`,
       }));
     } finally {
-      setLoading(prev => ({ ...prev, [exampleId]: false }));
+      setLoading((prev) => ({ ...prev, [exampleId]: false }));
     }
   };
 
   return (
-    <div className="p-10 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors">
+    <div className="p-10 bg-white dark:bg-gray-900 min-h-screen transition-colors">
       <h2 className="font-semibold text-3xl text-gray-800 dark:text-gray-100 mb-2">
         {chapter?.chapter_name}
       </h2>
@@ -67,7 +67,10 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
       {/* Content Section */}
       <div>
         {content?.content.map((item, contentIndex) => (
-          <div key={contentIndex} className="my-5 bg-gray-200 dark:bg-gray-800 rounded-lg p-6 shadow-md">
+          <div
+            key={contentIndex}
+            className="my-5 bg-gray-200 dark:bg-gray-800 rounded-lg p-6 shadow-md"
+          >
             <h2 className="font-medium text-xl text-gray-800 dark:text-gray-100 mb-3">
               {item.title}
             </h2>
@@ -84,8 +87,13 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
                         height="300px"
                         defaultLanguage={example.language || "python"}
                         value={Array.isArray(example.code)
-                          ? example.code.join("\n").replace("<pre><code>", "").replace("</pre></code>", "")
-                          : (example.code as string).replace("<pre><code>", "").replace("</code></pre>", "")}
+                          ? example.code
+                              .join("\n")
+                              .replace("<pre><code>", "")
+                              .replace("</pre></code>", "")
+                          : (example.code as string)
+                              .replace("<pre><code>", "")
+                              .replace("</code></pre>", "")}
                         options={{
                           minimap: { enabled: true },
                           scrollBeyondLastLine: false,
@@ -94,13 +102,20 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
                         }}
                       />
                       <Button
-                        onClick={() => runCode(
-                          Array.isArray(example.code)
-                            ? example.code.join("\n").replace("<pre><code>", "").replace("</pre></code>", "")
-                            : (example.code as string).replace("<pre><code>", "").replace("</code></pre>", ""),
-                          example.language || "python",
-                          exampleId
-                        )}
+                        onClick={() =>
+                          runCode(
+                            Array.isArray(example.code)
+                              ? example.code
+                                  .join("\n")
+                                  .replace("<pre><code>", "")
+                                  .replace("</pre></code>", "")
+                              : (example.code as string)
+                                  .replace("<pre><code>", "")
+                                  .replace("</code></pre>", ""),
+                            example.language || "python",
+                            exampleId
+                          )
+                        }
                         className="mt-3 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
                         disabled={loading[exampleId]}
                       >
@@ -109,7 +124,9 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
                       {/* Output Section */}
                       {outputs[exampleId] !== undefined && outputs[exampleId] !== null && (
                         <div className="mt-4 p-4 bg-gray-300 dark:bg-gray-700 rounded-lg shadow-inner">
-                          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Output:</h3>
+                          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                            Output:
+                          </h3>
                           <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap overflow-x-auto">
                             {outputs[exampleId]}
                           </pre>
@@ -138,4 +155,3 @@ const ChapterContent = ({ course, chapter, content, handleNext }: ChapterContent
 };
 
 export default ChapterContent;
-

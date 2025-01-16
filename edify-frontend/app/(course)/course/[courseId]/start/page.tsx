@@ -77,7 +77,7 @@ const CourseStart = ({ params }: CourseStartProps) => {
   
 
   return (
-    <div>
+    <div className="w-[90%] mx-auto px-12">
       <div className="fixed md:w-64 hidden md:block h-screen border-r shadow-sm">
         <h2 className="font-medium text-lg bg-primary p-4 text-white">
           {course?.courseOutput.topic}
@@ -89,7 +89,7 @@ const CourseStart = ({ params }: CourseStartProps) => {
               key={index}
               className={`cursor-pointer hover:bg-purple-100 ${
                 selectedChapter?.chapter_name === chapter.chapter_name &&
-                "bg-purple-50"
+                "bg-white"
               }`}
               onClick={() => {
                 setSelectedChapter(chapter);

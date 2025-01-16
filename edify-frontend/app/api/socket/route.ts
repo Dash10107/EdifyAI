@@ -1,23 +1,25 @@
 import { Server } from 'socket.io';
 
+let io: Server | null = null; // To track the server instance
+
 const SocketHandler = (req: any, res: any) => {
-  if (res.socket.server.io) {
-    console.log('Socket is already running');
+  if (res.socket?.server?.io) {
+    console.log('Socket.IO server is already running.');
   } else {
-    console.log('Socket is initializing');
-    const io = new Server(res.socket.server, {
+    console.log('Initializing Socket.IO server...');
+    io = new Server(res.socket.server, {
       path: '/api/socket',
       cors: {
-        origin: "*", // Replace "*" with your client URL for production
-        methods: ["GET", "POST"]
-      }
+        origin: "*", // Replace "*" with the actual client URL in production
+        methods: ["GET", "POST"],
+      },
     });
     res.socket.server.io = io;
 
     io.on('connection', (socket) => {
-      console.log('New socket connection:', socket.id);
+      console.log(`New client connected: ${socket.id}`);
 
-      // Join a specific room
+      // Join room event
       socket.on('join-room', (roomId) => {
         socket.join(roomId);
         console.log(`Socket ${socket.id} joined room: ${roomId}`);
@@ -32,12 +34,22 @@ const SocketHandler = (req: any, res: any) => {
         });
         console.log(`Message sent to room ${roomId}: ${content}`);
       });
+
+      // Disconnect event
+      socket.on('disconnect', () => {
+        console.log(`Socket ${socket.id} disconnected.`);
+      });
     });
   }
-  res.end();
+
+  res.end(); // End the response
 };
 
-// Export the handler in the required Next.js 13+ format
-export const GET = async (req: Request, res: any) => {
+// Next.js app directory API route handler
+export const GET = (req: any, res: any) => {
+  SocketHandler(req, res);
+};
+
+export const POST = (req: any, res: any) => {
   SocketHandler(req, res);
 };
